@@ -12,7 +12,7 @@ module.exports = {
     themes: [
       {
         resaleTheme: {
-          primary: '#03f4fc',
+          primary: '#164e63',
           secondary: '#34d399',
           accent: '#3A4256',
           neutral: '#3D4451',

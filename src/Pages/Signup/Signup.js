@@ -1,23 +1,37 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Signup = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
     const [createUserEmail, setCreateUserEmail] = useState('');
+    const navigate = useNavigate();
 
 
     const handleSignup = data => {
         console.log("🚀 ~ file: Signup.js ~ line 12 ~ handleSignup ~ data", data)
+        setSignupError('')
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log("🚀 ~ file: Signup.js ~ line 18 ~ handleSignup ~ user", user)
+                navigate('/')
+                toast.success('User Created Successfully')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => { })
+                    .catch(err => console.error(err))
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err.message)
+                setSignupError(err.message.split(' ')[2])
+            })
 
     }
 

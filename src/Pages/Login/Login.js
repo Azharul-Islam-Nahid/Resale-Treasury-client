@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Login = () => {
+    const { signIn } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const navigate = useNavigate();
 
 
     const handleLogin = data => {
         console.log("🚀 ~ file: Login.js ~ line 12 ~ handleLogin ~ data", data)
+        setLoginError('')
+
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log("🚀 ~ file: Login.js ~ line 18 ~ handleLogin ~ user", user)
+                navigate('/')
+                toast.success('User Logged in')
+
+            })
+            .catch(err => {
+                console.error(err.message)
+                setLoginError(err.message.split(' ')[2])
+            })
+
 
     }
 
