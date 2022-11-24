@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Signup = () => {
+    const { createUser } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
     const [createUserEmail, setCreateUserEmail] = useState('');
@@ -10,6 +12,12 @@ const Signup = () => {
 
     const handleSignup = data => {
         console.log("🚀 ~ file: Signup.js ~ line 12 ~ handleSignup ~ data", data)
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log("🚀 ~ file: Signup.js ~ line 18 ~ handleSignup ~ user", user)
+            })
+            .catch(err => console.error(err));
 
     }
 
@@ -18,6 +26,15 @@ const Signup = () => {
             <div className='w-96 p-7'>
                 <h2 className='font-extrabold text-xl text-center'>Signup</h2>
                 <form onSubmit={handleSubmit(handleSignup)}>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Name</span></label>
+                        <input type="text"
+                            {...register("name", {
+                                required: "Name Address is required"
+                            })}
+                            className="input input-bordered w-full max-w-xs" />
+                        {errors.name && <p className='text-red-600'>{errors.name?.message}</p>}
+                    </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Email</span></label>
                         <input type="text"
@@ -52,7 +69,7 @@ const Signup = () => {
                 </form>
                 <p>Already have an account? <Link className='font-bold text-info' to="/signup">signup</Link></p>
                 <div className="divider"> </div>
-                <button className='btn btn-info btn-outline w-full'>Google Log In</button>
+                <button className='btn btn-info btn-outline w-full'>Google Sign In</button>
             </div>
         </div>
     );
