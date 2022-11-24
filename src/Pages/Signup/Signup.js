@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -5,35 +7,107 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Signup = () => {
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, providerLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
     const [createUserEmail, setCreateUserEmail] = useState('');
+
+    const googleProvider = new GoogleAuthProvider();
     const navigate = useNavigate();
 
 
-    const handleSignup = data => {
+    const handleSignup = (data) => {
         console.log("🚀 ~ file: Signup.js ~ line 12 ~ handleSignup ~ data", data)
         setSignupError('')
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log("🚀 ~ file: Signup.js ~ line 18 ~ handleSignup ~ user", user)
-                navigate('/')
                 toast.success('User Created Successfully')
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
-                    .then(() => { })
-                    .catch(err => console.error(err))
+                    .then(() => {
+                        saveUser(data.name, data.email, data.role);
+                    })
+
             })
             .catch(err => {
                 console.error(err.message)
-                setSignupError(err.message.split(' ')[2])
             })
+            .catch(error => {
+                console.log(error)
+                setSignupError(error.message)
+            });
 
     }
+
+    const saveUser = (name, email, role) => {
+
+
+        axios.post(`http://localhost:5000/users`, {
+            name: name,
+            email: email,
+            role: role
+        })
+            .then(function (response) {
+                console.log(response);
+                navigate('/');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+        // normal post  system
+        // const user = { name, email, role };
+
+        // fetch(`http://localhost:5000/users`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(user)
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log("🚀 ~ file: Signup.js ~ line 50 ~ saveUser ~ data", data)
+        //         navigate('/');
+        //     })
+
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+    }
+
+
+
+    const HandleGoogleSignIn = ({ name, email, role }) => {
+        providerLogin(googleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                toast.success('User Created Successfully.')
+                const userInfo = {
+                    email: user.email,
+                    name: user.displayName,
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        saveUser(name = user.displayName, email = user.email, role = "Buyer");
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(error => {
+                console.log(error)
+                setSignupError(error.message)
+            });
+
+
+
+    }
+
 
     return (
         <div className='h-[800px] flex justify-center items-center'>
@@ -83,7 +157,7 @@ const Signup = () => {
                 </form>
                 <p>Already have an account? <Link className='font-bold text-info' to="/signup">signup</Link></p>
                 <div className="divider"> </div>
-                <button className='btn btn-info btn-outline w-full'>Google Sign In</button>
+                <button onClick={HandleGoogleSignIn} className='btn btn-info btn-outline w-full'>Google Sign In</button>
             </div>
         </div>
     );
