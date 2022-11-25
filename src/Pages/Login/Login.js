@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -5,11 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const { signIn, providerLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const navigate = useNavigate();
+
+    const googleProvider = new GoogleAuthProvider();
 
 
     const handleLogin = data => {
@@ -31,6 +34,24 @@ const Login = () => {
 
 
     }
+
+    const HandleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+            .then(result => {
+                const user = result.user;
+                setLoginUserEmail(user.email);
+
+                toast.success('Successfully logged in');
+            })
+
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message);
+            })
+
+
+    }
+
 
     return (
         <div className='h-[800px] flex justify-center items-center'>
@@ -64,7 +85,7 @@ const Login = () => {
                 </form>
                 <p>New to Resale Treasury? <Link className='font-bold text-info' to="/signup">Create New Account</Link></p>
                 <div className="divider"> </div>
-                <button className='btn btn-info btn-outline w-full'>Google Log In</button>
+                <button onClick={HandleGoogleSignIn} className='btn btn-info btn-outline w-full'>Google Log In</button>
             </div>
         </div>
     );

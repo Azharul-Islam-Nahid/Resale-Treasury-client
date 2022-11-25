@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ModalForm from '../../ModalForm/ModalForm';
 
 const CategoryCards = ({ sellerPost }) => {
 
+    const [modal, setModal] = useState(true);
+
 
     return (
 
-        <div className="mx-auto flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800">
+        <div className="mx-auto m-10 flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-200 text-black rounded-lg">
             <h2 className="text-xl font-semibold">Seller name: {sellerPost?.seller_name}</h2>
             <ul className="flex flex-col divide-y divide-gray-300">
                 <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
                     <div className="flex w-full space-x-2 sm:space-x-4">
-                        <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500" src={sellerPost?.image} alt="resell products" />
+                        <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-50" src={sellerPost?.image} alt="resell products" />
                         <div className="flex flex-col justify-between w-full pb-4">
                             <div className="flex justify-between w-full pb-2 space-x-2">
                                 <div className="space-y-1">
@@ -57,9 +59,14 @@ const CategoryCards = ({ sellerPost }) => {
                     <span className="sr-only sm:not-sr-only">Continue to </span>Booking
                 </label>
             </div>
-            <ModalForm
-                sellerPostInfo={sellerPost}
-            ></ModalForm>
+
+            {
+                modal &&
+                <ModalForm
+                    sellerPostInfo={sellerPost}
+                    setModal={setModal}
+                ></ModalForm>
+            }
         </div>
     );
 };
