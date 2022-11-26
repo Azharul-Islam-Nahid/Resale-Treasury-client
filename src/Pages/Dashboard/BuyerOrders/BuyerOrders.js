@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../Components/PrimaryButton/UseLoader/Loading';
+import { AuthContext } from '../../../Contexts/AuthProvider';
 
 
 
 const BuyerOrders = () => {
 
+    const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/orders`;
+
+    const url = `http://localhost:5000/orders?email=${user?.email}`;
 
     const { data: orders = [], isLoading } = useQuery({
         queryKey: ['orders'],
@@ -43,7 +46,6 @@ const BuyerOrders = () => {
                                 <h2 className="card-title">Product: {order?.product}</h2>
 
                                 <p>Buyer name: {order?.name}</p>
-                                <p>Email: {order?.email}</p>
                                 <p>Location: {order?.location}</p>
                                 <p>Phone: {order?.phone}</p>
                                 <p className='font-bold'>Price: {order?.price}</p>
