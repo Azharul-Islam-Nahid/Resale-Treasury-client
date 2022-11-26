@@ -23,10 +23,10 @@ const BuyerOrders = () => {
     })
     console.log("🚀 ~ file: BuyerOrders.js ~ line 24 ~ BuyerOrders ~ orders", orders)
 
+
     if (isLoading) {
         return <Loading></Loading>
     }
-
 
 
     return (
