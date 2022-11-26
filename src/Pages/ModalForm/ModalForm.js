@@ -5,7 +5,7 @@ import { AuthContext } from '../../Contexts/AuthProvider';
 const ModalForm = ({ sellerPostInfo, setModal }) => {
 
 
-    const { resale_price, product_name } = sellerPostInfo;
+    const { resale_price, image, product_name } = sellerPostInfo;
 
     const { user } = useContext(AuthContext);
 
@@ -13,6 +13,8 @@ const ModalForm = ({ sellerPostInfo, setModal }) => {
         e.preventDefault()
         const form = e.target;
         const name = form.name.value
+        const productName = product_name
+        const productImage = image
         const email = form.email.value
         const price = form.price.value
         const location = form.location.value
@@ -20,6 +22,8 @@ const ModalForm = ({ sellerPostInfo, setModal }) => {
 
         const buyer = {
             name: name,
+            product: productName,
+            product_img: productImage,
             email: email,
             price: price,
             location: location,

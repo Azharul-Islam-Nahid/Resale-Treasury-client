@@ -8,6 +8,8 @@ import { AuthContext } from '../../Contexts/AuthProvider';
 import useToken from '../../hooks/UseToken';
 
 const Signup = () => {
+
+
     const { createUser, updateUser, providerLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
@@ -20,6 +22,7 @@ const Signup = () => {
     if (token) {
         navigate('/');
     }
+
 
 
     const handleSignup = (data) => {
