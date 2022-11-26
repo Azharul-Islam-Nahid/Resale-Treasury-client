@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Loading from '../../../Components/PrimaryButton/UseLoader/Loading';
+import Loading from '../../../Components/UseLoader/Loading';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 

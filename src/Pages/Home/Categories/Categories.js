@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import Loading from '../../../Components/PrimaryButton/UseLoader/Loading';
+import Loading from '../../../Components/UseLoader/Loading';
 import CategoryOptions from './CategoryOptions';
 
 const Categories = () => {

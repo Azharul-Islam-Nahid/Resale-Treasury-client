@@ -30,8 +30,8 @@ const DashboardLayout = () => {
                         {
                             isAdmin &&
                             <>
-                                <li><Link>All sellers</Link></li>
-                                <li><Link>All buyers</Link></li>
+                                <li><Link to='/dashboard/AllSellers'>All sellers</Link></li>
+                                <li><Link to='/dashboard/AllBuyers'>All buyers</Link></li>
                             </>
                         }
                     </ul>

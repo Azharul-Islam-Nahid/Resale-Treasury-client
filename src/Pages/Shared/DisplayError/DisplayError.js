@@ -25,7 +25,7 @@ const DisplayError = () => {
                 <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                     <div className="max-w-md text-center">
 
-                        <img src='https://i.ibb.co/VY4DvSn/images.jpghttps://i.ibb.co/8B9DVD0/ef8bbd4554dedcc2fd1fd15ab0ebd7a1.gif' alt='error' />
+                        <img src='https://i.ibb.co/C6d0Jg7/ef8bbd4554dedcc2fd1fd15ab0ebd7a1.gif' alt='error' />
                     </div>
                     <p className="text-red-500">Oops! Something Went Wrong!</p>
                     <p className='text-red-400'>{error.statusText || error.message}</p>
