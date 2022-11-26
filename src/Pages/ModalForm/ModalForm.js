@@ -18,7 +18,7 @@ const ModalForm = ({ sellerPostInfo, setModal }) => {
         const location = form.location.value
         const phone = form.phone.value
 
-        const user = {
+        const buyer = {
             name: name,
             email: email,
             price: price,
@@ -27,9 +27,27 @@ const ModalForm = ({ sellerPostInfo, setModal }) => {
         }
         console.log("🚀 ~ file: ModalForm.js ~ line 28 ~ modalSubmit ~ user", user)
 
-        toast.success('The Item Is Booked!')
-        setModal(null)
+        fetch(`http://localhost:5000/orders`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(buyer)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                toast.success('The Item Is Booked!')
+                setModal(null)
+
+            })
     }
+
+
+
+
+
     return (
         <>
             <input type="checkbox" id="buyers-modal" className="modal-toggle" />

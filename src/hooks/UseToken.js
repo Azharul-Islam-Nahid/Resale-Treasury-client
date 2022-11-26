@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Contexts/AuthProvider";
 
 const useToken = email => {
+    const { logOut } = useContext(AuthContext);
     const [token, setToken] = useState('');
     useEffect(() => {
         if (email) {
@@ -11,9 +13,10 @@ const useToken = email => {
                         localStorage.setItem('accessToken', data.accessToken);
                         setToken(data.accessToken);
                     }
+                    else logOut()
                 });
         }
-    }, [email]);
+    }, [email, logOut]);
     return [token];
 }
 
