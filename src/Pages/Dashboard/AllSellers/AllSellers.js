@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast';
+import Loading from '../../../Components/UseLoader/Loading';
 
 const AllSellers = () => {
 
@@ -22,6 +24,34 @@ const AllSellers = () => {
         }
     });
 
+
+
+    if (isLoading) {
+        <Loading></Loading>
+    }
+
+
+    const handleDeleteSeller = seller => {
+        fetch(`http://localhost:5000/users/${seller._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`,
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.success(`Buyer ${seller.name} removed successfully`)
+                }
+
+            })
+    }
+
+
+
+
     return (
         <div>
             <div>
@@ -39,13 +69,13 @@ const AllSellers = () => {
                         <tbody>
                             {
                                 sellers?.map((seller, i) => <tr
-                                    key={sellers._id}
+                                    key={seller._id}
                                     value={seller}
                                     className="hover">
                                     <th>{i + 1}</th>
                                     <td>{seller?.name}</td>
                                     <td>{seller?.email}</td>
-                                    <td><label onClick='' className="btn btn-xs btn-error">delete</label></td>
+                                    <td><label onClick={() => handleDeleteSeller(seller)} className="btn btn-xs btn-error">delete</label></td>
                                 </tr>)
                             }
                         </tbody>

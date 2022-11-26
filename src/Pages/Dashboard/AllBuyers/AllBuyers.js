@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast';
 import Loading from '../../../Components/UseLoader/Loading';
 
 const AllBuyers = () => {
@@ -23,6 +24,27 @@ const AllBuyers = () => {
 
         }
     });
+    console.log("🚀 ~ file: Allbuyers.js ~ line 27 ~ AllBuyers ~ buyers", buyers)
+
+
+    const handleDeleteBuyer = buyer => {
+        fetch(`http://localhost:5000/users/${buyer._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`,
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.success(`Buyer ${buyer.name} removed successfully`)
+                }
+
+            })
+    }
+
 
 
 
@@ -47,30 +69,18 @@ const AllBuyers = () => {
                         <tbody>
                             {
                                 buyers?.map((buyer, i) => <tr
-                                    key={buyers._id}
+                                    key={buyer._id}
                                     value={buyer}
                                     className="hover">
                                     <th>{i + 1}</th>
                                     <td>{buyer?.name}</td>
                                     <td>{buyer?.email}</td>
-                                    <td><label onClick='' className="btn btn-xs btn-error">delete</label></td>
+                                    <td><label onClick={() => handleDeleteBuyer(buyer)} className="btn btn-xs btn-error">delete</label></td>
                                 </tr>)
                             }
                         </tbody>
                     </table>
                 </div>
-                {/* {
-                deleteBuyer && <ConfirmationModal
-                    closeModal={closeModal}
-                    modalData={deleteBuyer}
-                    modalAction={handleDeleteBuyer}
-                    actionButtonName='delete'
-                    title={`Are you sure you want to delete?`}
-                    message={`If you delete ${deleteBuyer.name} it can't be undone.`}
-                >
-
-                </ConfirmationModal>
-            } */}
             </div>
         </div>
     );
