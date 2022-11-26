@@ -4,12 +4,11 @@ import ModalForm from '../../ModalForm/ModalForm';
 
 const CategoryCards = ({ sellerPost }) => {
 
-    const [modal, setModal] = useState(true);
+    const [modal, setModal] = useState(null);
 
 
     return (
-
-        <div className="mx-auto m-10 flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-200 text-black rounded-lg">
+        <div className="lg:max-w-3xl mx-auto m-10 p-6 space-y-4 sm:p-10 bg-gray-200 text-black rounded-lg">
             <h2 className="text-xl font-semibold">Seller name: {sellerPost?.seller_name}</h2>
             <ul className="flex flex-col divide-y divide-gray-300">
                 <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
@@ -55,7 +54,7 @@ const CategoryCards = ({ sellerPost }) => {
                         <span className="sr-only sm:not-sr-only"> to Home</span>
                     </button>
                 </Link>
-                <label htmlFor='buyers-modal' type="button" className="px-6 py-2 border rounded-md bg-sky-600 text-gray-50 border-sky-600">
+                <label onClick={() => setModal(sellerPost)} htmlFor='buyers-modal' type="button" className="px-6 py-2 border rounded-md bg-sky-600 text-gray-50 border-sky-600">
                     <span className="sr-only sm:not-sr-only">Continue to </span>Booking
                 </label>
             </div>

@@ -7,7 +7,7 @@ const SingleCategories = () => {
     const sellerPosts = useLoaderData();
     console.log("🚀 ~ file: SingleCategories.js ~ line 7 ~ SingleCategories ~ sellerPosts", sellerPosts)
     return (
-        <div className='m-auto'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 m-auto'>
             {
                 sellerPosts.map(sellerPost => <CategoryCards
                     key={sellerPost?._id}

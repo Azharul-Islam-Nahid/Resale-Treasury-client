@@ -28,7 +28,7 @@ const ModalForm = ({ sellerPostInfo, setModal }) => {
         console.log("🚀 ~ file: ModalForm.js ~ line 28 ~ modalSubmit ~ user", user)
 
         toast.success('The Item Is Booked!')
-        setModal(false)
+        setModal(null)
     }
     return (
         <>

@@ -5,15 +5,21 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import useToken from '../../hooks/UseToken';
 
 const Signup = () => {
     const { createUser, updateUser, providerLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signupError, setSignupError] = useState('');
-    const [createUserEmail, setCreateUserEmail] = useState('');
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail);
 
     const googleProvider = new GoogleAuthProvider();
     const navigate = useNavigate();
+
+    if (token) {
+        navigate('/');
+    }
 
 
     const handleSignup = (data) => {
@@ -53,7 +59,7 @@ const Signup = () => {
         })
             .then(function (response) {
                 console.log(response);
-                navigate('/');
+                setCreatedUserEmail(email);
             })
             .catch(function (error) {
                 console.log(error);
