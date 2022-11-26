@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../Contexts/AuthProvider';
 import useAdmin from '../hooks/UseAdmin';
+import useSeller from '../hooks/UseSeller';
 import Footer from '../Pages/Shared/Footer/Footer';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
@@ -10,6 +11,7 @@ const DashboardLayout = () => {
     const { user } = useContext(AuthContext);
 
     const [isAdmin] = useAdmin(user?.email);
+    const [isSeller] = useSeller(user?.email);
 
 
     return (
@@ -25,8 +27,16 @@ const DashboardLayout = () => {
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         {/* <!-- Sidebar content here --> */}
                         <li><Link to='/dashboard/myOrders'>My orders</Link></li>
-                        <li><Link>Add a product</Link></li>
-                        <li><Link>My products</Link></li>
+
+                        {
+                            isSeller &&
+                            <>
+                                <li><Link to='/dashboard/AddProduct'>Add a product</Link></li>
+                                <li><Link to='/dashboard/MyProducts'>My products</Link></li>
+                            </>
+                        }
+
+
                         {
                             isAdmin &&
                             <>
