@@ -14,6 +14,7 @@ const CheckoutForm = ({ orderDetails }) => {
 
     const { price, email, name, _id } = orderDetails;
 
+
     useEffect(() => {
 
         fetch("http://localhost:5000/create-payment-intent", {

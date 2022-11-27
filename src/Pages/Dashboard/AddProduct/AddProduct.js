@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../../../Components/UseLoader/Loading';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const AddProduct = () => {
 
+    const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+
     const imageHostKey = process.env.REACT_APP_imgbb_key;
 
 
@@ -49,16 +51,15 @@ const AddProduct = () => {
 
 
         const categoryID = form.categoryId.value;
+        const condition = form.condition.value;
         const productName = form.product_name.value;
         const email = user?.email;
         const sellerName = form.seller_name.value;
         const sellerLocation = form.location.value;
         const originalPrice = form.original_price.value;
         const resalePrice = form.resale_price.value;
+        const description = form.description.value;
         const yearUsed = form.year_used.value;
-
-
-
 
 
         fetch(url, {
@@ -73,10 +74,12 @@ const AddProduct = () => {
 
                     const productDetail = {
                         id: categoryID,
+                        condition: condition,
+                        description: description,
                         image: imgData?.data.url,
                         product_name: productName,
                         location: sellerLocation,
-                        resell_price: resalePrice,
+                        resale_price: resalePrice,
                         orginal_price: originalPrice,
                         year_used: yearUsed,
                         seller_name: sellerName,
@@ -98,7 +101,7 @@ const AddProduct = () => {
                         .then(result => {
                             console.log(result);
                             toast.success(` ${productName} posted successfully`);
-                            Navigate('/dashboard/MyProducts')
+                            navigate('/dashboard/MyProducts')
 
                         })
                 }
@@ -132,7 +135,15 @@ const AddProduct = () => {
                     </div>
                     <div>
                         <label htmlFor="product_img" className="text-sm font-semibold">Upload product image</label>
-                        <input id="product_img" type="file" className="w-full p-3 rounded font-semibold text-slate-900 dark:bg-gray-50" required />
+                        <input id="product_img" type="file" className="w-full p-3 rounded font-semibold text-slate-900 bg-white dark:bg-gray-50" required />
+                    </div>
+                    <div>
+                        <label htmlFor="condition" className="text-sm font-semibold">Condition</label>
+                        <select name="condition" className="select select-bordered w-full">
+                            <option>excellent</option>
+                            <option>good</option>
+                            <option>fair</option>
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="seller_name" className="text-sm font-semibold">Your Name</label>
@@ -154,7 +165,11 @@ const AddProduct = () => {
                         <label htmlFor="year_used" className="text-sm font-semibold">Year Used</label>
                         <input id="year_used" type="number" className="w-full p-3 rounded font-semibold text-slate-900 dark:bg-gray-50" required />
                     </div>
-                    <button type="submit" className="w-full p-3 text-sm font-bold tracking-wide uppercase rounded dark:bg-gray-700 dark:text-gray-200">Post a product</button>
+                    <div>
+                        <label htmlFor="description" className="text-sm font-semibold">Description</label>
+                        <textarea id="description" type="text" className="w-full p-3 rounded font-semibold text-slate-900 dark:bg-gray-50" required />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-full p-3 text-sm font-bold tracking-wide uppercase rounded dark:bg-gray-700 dark:text-gray-200">Post a product</button>
 
                 </form>
             </div>

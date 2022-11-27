@@ -75,8 +75,8 @@ const CategoryCards = ({ sellerPost }) => {
                                     <p className="text-sm text-gray-600">Classic</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-lg font-semibold">Selling price: {resale_price}</p>
-                                    <p className="text-sm">Original price: {orginal_price}</p>
+                                    <p className="text-lg font-semibold">Selling price: {resale_price} $</p>
+                                    <p className="text-sm">Original price: {orginal_price} $</p>
                                 </div>
                             </div>
                             <div className="flex text-sm divide-x">
@@ -98,7 +98,7 @@ const CategoryCards = ({ sellerPost }) => {
                 </li>
             </ul>
             <div className="space-y-1 text-right">
-                <p>Used: <span className="font-semibold">{year_used}</span>
+                <p>Used: <span className="font-semibold">{year_used} year</span>
                 </p>
                 <p className="text-sm text-gray-600">Location: {location}</p>
             </div>
