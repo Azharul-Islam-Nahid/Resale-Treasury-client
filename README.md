@@ -6,6 +6,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+* Project name:Resale Treasury , resale phone service based react single page web app
+* CSS component library used Tailwind & Daisy UI & mamba.
+* Authenticated using google firebase.
+* Added Private route.
+* JWT verification implemented.
+* User friendly Interface.
+* posting updating and delete function available.
+* All data fetched from mongo db server.
+* Fully desktop & mobile responsive site.
+* Live site : https://resale-treasury.web.app
+
 ### `npm start`
 
 Runs the app in the development mode.\
