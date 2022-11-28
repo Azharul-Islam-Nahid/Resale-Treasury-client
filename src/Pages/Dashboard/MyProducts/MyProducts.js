@@ -4,15 +4,18 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../Components/UseLoader/Loading';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useTitle from '../../../hooks/UseTitle';
 
 const MyProducts = () => {
+
+    useTitle('Seller products')
 
     const navigate = useNavigate();
 
     const { user } = useContext(AuthContext);
 
 
-    const url = `http://localhost:5000/getProduct?email=${user?.email}`;
+    const url = `https://resale-treasury-server-site.vercel.app/getProduct?email=${user?.email}`;
 
     const { data: sellerPosts = [], isLoading, refetch } = useQuery({
         queryKey: ['sellerPosts'],
@@ -26,6 +29,7 @@ const MyProducts = () => {
             return data;
         }
     })
+    console.log("🚀 ~ file: MyProducts.js ~ line 29 ~ MyProducts ~ sellerPosts", sellerPosts)
 
 
 
@@ -36,7 +40,7 @@ const MyProducts = () => {
 
 
     const handleDeleteSeller = post => {
-        fetch(`http://localhost:5000/deleteProduct/${post._id}`, {
+        fetch(`https://resale-treasury-server-site.vercel.app/deleteProduct/${post._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`,
@@ -71,7 +75,7 @@ const MyProducts = () => {
 
         }
 
-        fetch(`http://localhost:5000/addProductTohome`, {
+        fetch(`https://resale-treasury-server-site.vercel.app/addProductTohome`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -80,10 +84,17 @@ const MyProducts = () => {
             body: JSON.stringify(productDetail)
         })
             .then(res => res.json())
-            .then(result => {
-                console.log(result);
-                toast.success(` ${ad?.product_name}advertised successfully`);
-                navigate('/')
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    toast.success(` ${ad?.product_name}advertised successfully`);
+                    navigate('/')
+                }
+
+                else {
+                    toast.error(data.message)
+                }
+
 
             })
     }
@@ -123,13 +134,6 @@ const MyProducts = () => {
                                     }} className='btn btn-outline w-full hover:bg-red-300'>
                                         Delete
                                     </button>
-
-                                    {/* {
-                                        Posts?.price && Posts?.paid &&
-
-                                        <span className="w-full text-green-600 font-bold">Advertised</span>
-
-                                    } */}
                                 </div>
                             </div>
                         </div>

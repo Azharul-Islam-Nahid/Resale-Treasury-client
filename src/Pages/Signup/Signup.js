@@ -5,9 +5,12 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import useTitle from '../../hooks/UseTitle';
 import useToken from '../../hooks/UseToken';
 
 const Signup = () => {
+
+    useTitle('Signup')
 
 
     const { createUser, updateUser, providerLogin } = useContext(AuthContext);
@@ -55,7 +58,7 @@ const Signup = () => {
     const saveUser = (name, email, role) => {
 
 
-        axios.post(`http://localhost:5000/users`, {
+        axios.post(`https://resale-treasury-server-site.vercel.app/users`, {
             name: name,
             email: email,
             role: role
@@ -72,7 +75,7 @@ const Signup = () => {
         // normal post  system
         // const user = { name, email, role };
 
-        // fetch(`http://localhost:5000/users`, {
+        // fetch(`https://resale-treasury-server-site.vercel.app/users`, {
         //     method: 'POST',
         //     headers: {
         //         'content-type': 'application/json'

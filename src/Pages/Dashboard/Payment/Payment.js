@@ -3,9 +3,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import Loading from '../../../Components/UseLoader/Loading';
+import useTitle from '../../../hooks/UseTitle';
 import CheckoutForm from './CheckoutForm';
 
 const Payment = () => {
+
+    useTitle('Payment')
 
     const stripePromise = loadStripe(process.env.REACT_APP_stripe_key);
     console.log("🚀 ~ file: Payment.js ~ line 11 ~ Payment ~ stripePromise", stripePromise)

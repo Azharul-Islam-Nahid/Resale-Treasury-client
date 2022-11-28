@@ -2,15 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
 import Loading from '../../../Components/UseLoader/Loading';
+import useTitle from '../../../hooks/UseTitle';
 
 const AllBuyers = () => {
 
+    useTitle('All buyer')
 
     const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/users/Buyer`, {
+                const res = await fetch(`https://resale-treasury-server-site.vercel.app/users/Buyer`, {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('accessToken')}`
                     }
@@ -28,7 +30,7 @@ const AllBuyers = () => {
 
 
     const handleDeleteBuyer = buyer => {
-        fetch(`http://localhost:5000/users/${buyer._id}`, {
+        fetch(`https://resale-treasury-server-site.vercel.app/users/${buyer._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`,

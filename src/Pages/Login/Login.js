@@ -4,9 +4,14 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import useTitle from '../../hooks/UseTitle';
 import useToken from '../../hooks/UseToken';
 
 const Login = () => {
+
+    useTitle('login')
+
+
     const { signIn, providerLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loginError, setLoginError] = useState('');
@@ -27,6 +32,8 @@ const Login = () => {
 
 
     const handleLogin = data => {
+
+
         console.log("🚀 ~ file: Login.js ~ line 12 ~ handleLogin ~ data", data)
         setLoginError('')
 

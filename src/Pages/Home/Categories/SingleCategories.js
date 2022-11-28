@@ -1,8 +1,11 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import useTitle from '../../../hooks/UseTitle';
 import CategoryCards from './CategoryCards';
 
 const SingleCategories = () => {
+
+    useTitle('All phones')
 
     const sellerPosts = useLoaderData();
     console.log("🚀 ~ file: SingleCategories.js ~ line 7 ~ SingleCategories ~ sellerPosts", sellerPosts)

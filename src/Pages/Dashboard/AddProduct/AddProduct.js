@@ -4,8 +4,11 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../Components/UseLoader/Loading';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import useTitle from '../../../hooks/UseTitle';
 
 const AddProduct = () => {
+
+    useTitle('Add product')
 
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
@@ -17,7 +20,7 @@ const AddProduct = () => {
         queryKey: ["categories"],
         queryFn: async () => {
             try {
-                const res = await fetch("http://localhost:5000/categories");
+                const res = await fetch("https://resale-treasury-server-site.vercel.app/categories");
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -89,7 +92,7 @@ const AddProduct = () => {
                     }
 
 
-                    fetch(`http://localhost:5000/addProduct`, {
+                    fetch(`https://resale-treasury-server-site.vercel.app/addProduct`, {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

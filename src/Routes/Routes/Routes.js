@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../../Pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
@@ -8,6 +9,7 @@ import BuyerOrders from "../../Pages/Dashboard/BuyerOrders/BuyerOrders";
 import Dashboard from "../../Pages/Dashboard/Dashboard";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
+import Errorpage from "../../Pages/Errorpage/Errorpage";
 import SingleCategories from "../../Pages/Home/Categories/SingleCategories";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
@@ -38,7 +40,11 @@ const router = createBrowserRouter([
             {
                 path: '/singleCategories/:id',
                 element: <PrivateRoute><SingleCategories></SingleCategories></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
+                loader: ({ params }) => fetch(`https://resale-treasury-server-site.vercel.app/categories/${params.id}`)
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
             }
         ]
     },
@@ -58,7 +64,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/payment/:id',
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/orders/${params.id}`)
+                loader: ({ params }) => fetch(`https://resale-treasury-server-site.vercel.app/orders/${params.id}`)
             },
             {
                 path: '/dashboard/AllBuyers',
@@ -77,6 +83,10 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><SellerRoute><MyProducts></MyProducts></SellerRoute></PrivateRoute>
             }
         ]
+    },
+    {
+        path: '*',
+        element: <Errorpage></Errorpage>
     }
 ])
 

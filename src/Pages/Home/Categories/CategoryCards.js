@@ -35,7 +35,7 @@ const CategoryCards = ({ sellerPost }) => {
         console.log("🚀 ~ file: ModalForm.js ~ line 32 ~ modalSubmit ~ buyer", buyer)
         console.log("🚀 ~ file: ModalForm.js ~ line 28 ~ modalSubmit ~ user", user)
 
-        fetch(`http://localhost:5000/orders`, {
+        fetch(`https://resale-treasury-server-site.vercel.app/orders`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -123,9 +123,9 @@ const CategoryCards = ({ sellerPost }) => {
                         <h3 className="text-sm text-white font-bold">Resale price</h3>
                         <input name="price" type="text" defaultValue={resale_price} disabled className="input w-full input-bordered font-semibold" />
                         <h3 className="text-sm text-white font-bold">Your phone number</h3>
-                        <input name="phone" type="number" placeholder='Your phone number' className="input w-full input-bordered font-semibold" />
+                        <input name="phone" type="number" placeholder='Your phone number' className="input w-full input-bordered font-semibold" required />
                         <h3 className="text-sm text-white font-bold">Meeting Location</h3>
-                        <input name="location" type="text" placeholder='Your Meeting Location' className="input w-full input-bordered font-semibold" />
+                        <input name="location" type="text" placeholder='Your Meeting Location' className="input w-full input-bordered font-semibold" required />
                         <input className='btn btn-primary w-full' type="submit" value="Submit" />
                     </form>
                 </>

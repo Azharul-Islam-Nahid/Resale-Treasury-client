@@ -17,7 +17,7 @@ const CheckoutForm = ({ orderDetails }) => {
 
     useEffect(() => {
 
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://resale-treasury-server-site.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const CheckoutForm = ({ orderDetails }) => {
                 bookingId: _id
             }
 
-            fetch('http://localhost:5000/payments', {
+            fetch('https://resale-treasury-server-site.vercel.app/payments', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -132,8 +132,8 @@ const CheckoutForm = ({ orderDetails }) => {
                     disabled={!stripe || !clientSecret || processing}>
                     Pay
                 </button>
+                <p className="text-red-500">{cardError}</p>
             </form>
-            <p className="text-red-500">{cardError}</p>
             {
                 success && <div>
                     <p className='text-green-500'>{success}</p>

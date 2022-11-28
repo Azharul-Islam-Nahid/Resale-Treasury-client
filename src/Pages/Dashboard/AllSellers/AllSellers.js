@@ -1,15 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
+import './AllSellers.css'
 import React from 'react';
 import toast from 'react-hot-toast';
 import Loading from '../../../Components/UseLoader/Loading';
+import useTitle from '../../../hooks/UseTitle';
 
 const AllSellers = () => {
 
+    useTitle('All seller')
+
+
+
     const { data: sellers, isLoading, refetch } = useQuery({
+
         queryKey: ['sellers'],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/users/Seller`, {
+                const res = await fetch(`https://resale-treasury-server-site.vercel.app/users/Seller`, {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('accessToken')}`
                     }
@@ -26,13 +33,11 @@ const AllSellers = () => {
 
 
 
-    if (isLoading) {
-        <Loading></Loading>
-    }
+
 
 
     const handleDeleteSeller = seller => {
-        fetch(`http://localhost:5000/users/${seller._id}`, {
+        fetch(`https://resale-treasury-server-site.vercel.app/users/${seller._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`,
@@ -42,13 +47,35 @@ const AllSellers = () => {
             .then(data => {
                 console.log(data);
                 if (data.deletedCount > 0) {
-                    refetch();
+                    refetch()
                     toast.success(`Buyer ${seller.name} removed successfully`)
                 }
 
             })
     }
+    const handleVerify = seller => {
+        fetch(`https://resale-treasury-server-site.vercel.app/users/${seller._id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({ verified: 'verified' })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.modifiedCount > 0) {
+                    refetch()
+                    toast.success(`Seller ${seller.name} verified successfully`)
+                }
 
+            })
+    }
+
+    if (isLoading) {
+        <Loading></Loading>
+    }
 
 
 
@@ -64,6 +91,7 @@ const AllSellers = () => {
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Action</th>
+                                <th>verify</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,9 +101,23 @@ const AllSellers = () => {
                                     value={seller}
                                     className="hover">
                                     <th>{i + 1}</th>
-                                    <td>{seller?.name}</td>
+                                    {seller?.status === 'verified' &&
+                                        <td>{seller?.name}<img src="https://i.ibb.co/n1rvDcv/valid-vector-icon-png-260889.jpg" alt="verifyIcon" class="verifyIcon"></img></td>
+                                    }
+                                    {
+                                        seller?.status !== 'verified' &&
+                                        <td>{seller?.name}</td>
+                                    }
                                     <td>{seller?.email}</td>
                                     <td><label onClick={() => handleDeleteSeller(seller)} className="btn btn-xs btn-error">delete</label></td>
+                                    {seller?.status === 'verified' &&
+                                        <td><p className='text-green-600 font-extrabold'>Verified</p></td>
+                                    }
+                                    {
+                                        seller?.status !== 'verified' &&
+                                        <td><label onClick={() => handleVerify(seller)} className="btn btn-xs b">verify</label></td>
+                                    }
+
                                 </tr>)
                             }
                         </tbody>
