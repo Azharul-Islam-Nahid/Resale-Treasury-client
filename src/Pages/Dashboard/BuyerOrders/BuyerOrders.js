@@ -52,7 +52,7 @@ const BuyerOrders = () => {
                                 <p>Buyer name: {order?.name}</p>
                                 <p>Location: {order?.location}</p>
                                 <p>Phone: {order?.phone}</p>
-                                <p className='font-bold'>Price: {order?.price}</p>
+                                <p className='font-bold'>Price: {order?.price}$</p>
                                 <div className="card-actions justify-end">
                                     {
                                         order?.price && !order?.paid &&

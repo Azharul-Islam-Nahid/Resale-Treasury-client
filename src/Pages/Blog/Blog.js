@@ -7,7 +7,7 @@ const Blog = () => {
     return (
         <div>
             <section className="container w-9/12 m-auto mt-5 text-center">
-                <h1 className='text-2xl font-extrabold'>Some question answer blog about Database</h1>
+                <h1 className='text-2xl font-extrabold'>Some question answer blog about React</h1>
                 <div className="container mt-4 mb-5 text-center">
                     <h4 className='text-xl mb-2 font-extrabold'> What are the different ways to manage a state in a React application?</h4>
 

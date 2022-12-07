@@ -44,7 +44,7 @@ const SellPosts = () => {
                         {advertises.map((advertise) => (
                             <div key={advertise?._id} className=" card card-compact lg:w-80 bg-base-100 shadow-xl shadow-primary">
                                 <figure className=''>
-                                    <img src={advertise?.image} alt="advertise" />
+                                    <img className='h-80' src={advertise?.image} alt="advertise" />
                                 </figure>
                                 <div className="card-body">
                                     <div className='flex justify-between'>
