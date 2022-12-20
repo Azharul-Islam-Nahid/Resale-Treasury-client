@@ -38,11 +38,11 @@ const SellPosts = () => {
 
             {
                 advertises.length === 0 ?
-                    <h2 className="text-4xl text-gray-800 mt-10 font-semibold">There is no Advertised items to show</h2>
+                    <h2 className="text-4xl text-gray-800 mt-10 font-semibold">There is no Advertised item to show</h2>
                     :
-                    (<div className='mt-14 grid lg:grid-cols-4 gap-10'>
+                    (<div className='mt-14 grid lg:grid-cols-3'>
                         {advertises.map((advertise) => (
-                            <div key={advertise?._id} className=" card card-compact lg:w-80 bg-base-100 shadow-xl shadow-primary">
+                            <div key={advertise?._id} className="m-auto mt-10 mb-10 card card-compact w-80 bg-base-100 shadow-md shadow-primary">
                                 <figure className=''>
                                     <img className='h-80' src={advertise?.image} alt="advertise" />
                                 </figure>
